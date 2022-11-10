@@ -1,4 +1,4 @@
-# MarketplacePortalManagement Solution
+# MarketplacePortalIAMAccess Solution
 Manage Marketplace portal list using cloudFormation
 
 # Description
