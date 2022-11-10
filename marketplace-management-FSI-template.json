@@ -1,0 +1,90 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Create a role with marketplace portal full access permission",
+    "Parameters" : {
+      "AWSAccountId" : {
+        "Type" : "String",
+        "Description" : "Enter AWS account id",
+        "AllowedPattern" : "^[\\d]{12}$"
+      },
+      "AWSRegion" : {
+        "Type" : "String",
+        "Description" : "Enter AWS region",
+        "AllowedPattern" : "^[a-z]{2}-[a-z]{4,10}-[\\d]+$"
+      }
+    },
+    "Resources": {
+        "MarketPlaceRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "AWS": 
+                                { 
+                                    "Fn::Sub": [
+                                        "arn:aws:iam::${accountId}:root",
+                                        {"accountId": {
+                                            "Ref": "AWSAccountId"
+                                        }}
+                                    ]
+                                }
+                            },
+                            "Condition": {"ArnLike": 
+                                {"aws:PrincipalArn": 
+                                    {
+                                        "Fn::Sub": [
+                                            "arn:aws:iam::${accountId}:role/aws-reserved/sso.amazonaws.com/${region}/AWSReservedSSO_AWSAdministratorAccess_*", 
+                                            {"accountId": {
+                                                "Ref": "AWSAccountId"
+                                            },
+                                            "region": {
+                                                "Ref": "AWSRegion"
+                                            }}
+                                        ]
+                                    } 
+                                }
+                            },                        
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "RoleName": { "Ref" : "AWS::StackName" },
+                "Policies": [
+                    {
+                        "PolicyName": "AWSMarketplaceFullAccess",
+                        "PolicyDocument": 
+                        {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "aws-marketplace:*"
+                                    ],
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    }
+                    
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "MarketPlacePortalRole": {
+            "Description": "Create a role with marketplace portal full access permission",
+            "Value": {
+                "Fn::GetAtt": [
+                    "MarketPlaceRole",
+                    "Arn"
+                ]
+            }
+        }
+    }
+}
