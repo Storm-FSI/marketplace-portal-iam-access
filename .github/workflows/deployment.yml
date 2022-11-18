@@ -20,8 +20,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/github-aws-s3-auth
           aws-region: ${{ env.AWS_REGION }}
-      - name: Upload to S3
+       # Upload a template file to AWS s3
+      - name:  copy marketplace-management-FSI-template.json to s3
         run: |
-          aws s3 mb s3://${{ env.BUCKET_NAME }}
-        env:
-          AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
+          aws s3 cp ../../marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/
