@@ -22,5 +22,4 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
        # Upload a template file to AWS s3
       - name:  copy marketplace-management-FSI-template.json to s3
-        run: |
-          aws s3 cp https://github.com/Storm-FSI/marketplace-portal-iam-access/blob/12ef698c15b263f0b24eb0e98900ba81b978d8e1/marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/
+        run: aws s3 cp ~/marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/
