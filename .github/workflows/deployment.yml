@@ -2,7 +2,7 @@ name: AWS S3 workflow
 on:
   push
 env:
-  BUCKET_NAME : "marketplace-portal-iam-access-bucket"
+  BUCKET_NAME : "marketplace-portal-iam-access-s3-bucket"
   AWS_REGION : "us-east-1"
   AWS_ACCOUNT_ID: "391091994985"
 # permission can be added at job level or workflow level    
@@ -20,8 +20,11 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/github-aws-s3-auth
           aws-region: ${{ env.AWS_REGION }}
+      - name: Create S3 bucket
+        run: aws s3 mb s3://${{ env.BUCKET_NAME }}
+        env:
+          AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
       - name: checkout repo
         uses: actions/checkout@master
-       # Upload a template file to AWS s3
       - name:  copy marketplace-management-FSI-template.json to s3
         run: aws s3 cp ./marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/
