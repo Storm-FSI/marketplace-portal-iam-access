@@ -28,4 +28,4 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@master
       - name:  copy marketplace-management-FSI-template.json to s3
-        run: aws s3 cp ./marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}
+        run: aws s3 cp ./marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}/
