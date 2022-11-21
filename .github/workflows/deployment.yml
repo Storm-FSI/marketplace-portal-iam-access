@@ -2,9 +2,10 @@ name: AWS S3 workflow
 on:
   push
 env:
-  BUCKET_NAME : "marketplace-portal-iam-access-s3-bucket"
+  BUCKET_NAME : "Storm-FSI-S3"
   AWS_REGION : "us-east-1"
   AWS_ACCOUNT_ID: "391091994985"
+  BUCKET_FOLDER_NAME: "marketplace-portal-iam-access-s3-folder"
 # permission can be added at job level or workflow level    
 permissions:
       id-token: write
@@ -21,7 +22,7 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/github-aws-s3-auth
           aws-region: ${{ env.AWS_REGION }}
       - name: Create S3 bucket
-        run: aws s3 mb s3://${{ env.BUCKET_NAME }}
+        run: aws s3 mb s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}
         env:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
       - name: checkout repo
