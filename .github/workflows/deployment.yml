@@ -22,10 +22,10 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/github-aws-s3-auth
           aws-region: ${{ env.AWS_REGION }}
       - name: Create S3 bucket
-        run: aws s3 mb s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}
+        run: aws s3 mb s3://${{ env.BUCKET_NAME }}
         env:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
       - name: checkout repo
         uses: actions/checkout@master
       - name:  copy marketplace-management-FSI-template.json to s3
-        run: aws s3 cp ./marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/
+        run: aws s3 cp ./marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}
