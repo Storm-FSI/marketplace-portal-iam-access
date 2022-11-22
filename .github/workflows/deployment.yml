@@ -5,7 +5,7 @@ env:
   BUCKET_NAME : "Storm-FSI-S3"
   AWS_REGION : "us-east-1"
   AWS_ACCOUNT_ID: "391091994985"
-  BUCKET_FOLDER_NAME: "marketplace-portal-iam-access-s3-folder"
+  BUCKET_FOLDER_NAME: ${{ github.event.repository.name }}
 # permission can be added at job level or workflow level    
 permissions:
       id-token: write
@@ -28,4 +28,4 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@master
       - name:  copy marketplace-management-FSI-template.json to s3
-        run: aws s3 cp ./marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}/
+        run: aws s3 cp ${{ github.workspace }}/marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/
