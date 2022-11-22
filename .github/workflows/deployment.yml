@@ -2,7 +2,7 @@ name: AWS S3 GitHub actions workflow
 on:
   push
 env:
-  BUCKET_NAME : "storm-fsi-s3-bucket"
+  BUCKET_NAME : "storm-fsi-solutions"
   AWS_REGION : "us-east-1"
   AWS_ACCOUNT_ID: "391091994985"
   BUCKET_FOLDER_NAME: ${{ github.event.repository.name }}
