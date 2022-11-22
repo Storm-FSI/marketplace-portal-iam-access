@@ -7,7 +7,7 @@ env:
   AWS_ACCOUNT_ID: "391091994985"
   BUCKET_FOLDER_NAME: ${{ github.event.repository.name }}
   ROLE_NAME: "fsi-github-openid-role"
-# permission can be added at job level or workflow level    
+  TEMPLATE_FILE: "marketplace-management-FSI-template.json"
 permissions:
       id-token: write
       contents: read
@@ -16,13 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.ROLE_NAME }}
           aws-region: ${{ env.AWS_REGION }}
-      - uses: actions/checkout@master
+      - name: check if s3 bucket exists
         id: check
         env:
           AWS_REGION: ${{ env.AWS_REGION }}
@@ -32,7 +32,5 @@ jobs:
         run: aws s3 mb s3://${{ env.BUCKET_NAME }}
         env:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
-      - name: checkout repo
-        uses: actions/checkout@master
-      - name:  copy marketplace-management-FSI-template.json to s3
+      - name:  copy template json file to s3
         run: aws s3 cp ${{ github.workspace }}/marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}/
