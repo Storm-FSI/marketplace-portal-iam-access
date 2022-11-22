@@ -34,4 +34,4 @@ jobs:
         env:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
       - name:  copy template json file to s3
-        run: aws s3 cp ${{ github.workspace }}/marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}/
+        run: aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}/
