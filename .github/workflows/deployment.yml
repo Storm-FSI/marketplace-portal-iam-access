@@ -22,7 +22,13 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.ROLE_NAME }}
           aws-region: ${{ env.AWS_REGION }}
+      - uses: actions/checkout@master
+        id: check
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+          AWS_S3_BUCKET: ${{ env.BUCKET_NAME }}
       - name: Create S3 bucket
+        if: steps.check.outputs.exists == 'false'
         run: aws s3 mb s3://${{ env.BUCKET_NAME }}
         env:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
