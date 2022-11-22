@@ -7,7 +7,7 @@ env:
   AWS_ACCOUNT_ID: "391091994985"
   BUCKET_FOLDER_NAME: ${{ github.event.repository.name }}
   ROLE_NAME: "fsi-github-openid-role"
-  TEMPLATE_FILE: "n"
+  TEMPLATE_FILE: "marketplace-management-FSI-template.json"
 permissions:
       id-token: write
       contents: read
@@ -29,10 +29,9 @@ jobs:
           AWS_REGION: ${{ env.AWS_REGION }}
           AWS_S3_BUCKET: ${{ env.BUCKET_NAME }}
       - name: Create S3 bucket if doesn't exist
-        if: steps.check.outputs.exists == 'false'
         run: aws s3 mb s3://${{ env.BUCKET_NAME }}
         env:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
           ACL: "public"
       - name:  Copy template JSON file to s3
-        run: aws s3 cp ${{ github.workspace }}/marketplace-management-FSI-template.json s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}/
+        run: aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}/
