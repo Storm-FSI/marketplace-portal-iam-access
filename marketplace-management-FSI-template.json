@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Create a role with marketplace portal full access permission",
+    "Description": "Create a role with marketplace-portal full access permission",
     "Parameters" : {
       "AWSAccountId" : {
         "Type" : "String",
