@@ -24,7 +24,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - name: Check if s3 bucket exists
         id: check
-        run: aws s3 ls s3://storm-fsi-solutio --output
+        run: aws s3 ls s3://storm-fsi-solutio --output json
       - name: Create S3 bucket if doesn't exist
         run: aws s3 mb s3://${{ env.BUCKET_NAME }}
         env:
