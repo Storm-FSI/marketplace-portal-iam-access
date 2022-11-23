@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@master
         id: check
         env:
+          BUCKET_NAME: "storm-fsi-solution"
           AWS_REGION: ${{ env.AWS_REGION }}
           AWS_S3_BUCKET: ${{ env.BUCKET_NAME }}
       - name: echo
