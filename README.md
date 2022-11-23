@@ -7,3 +7,6 @@ Define a cloudformation template (JSON format) to create an IAM role. This role 
 
 # Deployment
 https://us-east-1.console.aws.amazon.com/cloudformation/home?region=<Region>#/stacks/quickcreate?templateUrl=https%3A%2F%2Fstormfsi-solutions.s3.amazonaws.com%2F/marketplace-role/mp-role-v1.json&stackName=MarketPlacePortalRole&param_AWSAccountId=<ACCOUNT_ID>&param_AWSRegion=<Region>
+
+# GitHub Actions Workflow
+  ![Untitled Diagram drawio](https://user-images.githubusercontent.com/47794950/203549987-7f75769d-bfe4-4e91-9840-2439c983abdb.png)
