@@ -29,7 +29,7 @@ jobs:
           AWS_REGION: ${{ env.AWS_REGION }}
           AWS_S3_BUCKET: ${{ env.BUCKET_NAME }}
       - name: echo
-        run: echo "${{ steps.check.outputs }}"
+        run: echo "${{ steps.check.outputs.exists }}"
       - name: Create S3 bucket if doesn't exist
         run: aws s3 mb s3://${{ env.BUCKET_NAME }}
         env:
