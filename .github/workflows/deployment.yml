@@ -3,10 +3,8 @@ on:
   push
 env:
   BUCKET_NAME : "storm-fsi-solutions"
-  AWS_REGION : "us-east-1"
-  AWS_ACCOUNT_ID: "391091994985"
-  BUCKET_FOLDER_NAME: ${{ github.event.repository.name }}
-  ROLE_NAME: "fsi-github-openid-role"
+  AWS_REGION : "eu-east-1"
+  ROLE_NAME: "github-oidc-aws-connector"
   TEMPLATE_FILE: "marketplace-management-FSI-template.json"
 permissions:
       id-token: write
@@ -20,7 +18,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.ROLE_NAME }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ env.ROLE_NAME }}
           aws-region: ${{ env.AWS_REGION }}
       - name: Create S3 bucket
         run: aws s3 mb s3://${{ env.BUCKET_NAME }}
@@ -28,4 +26,4 @@ jobs:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
           ACL: "public"
       - name:  Copy template JSON file to s3
-        run: aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_FOLDER_NAME }}/
+        run: aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ github.event.repository.name }}/
