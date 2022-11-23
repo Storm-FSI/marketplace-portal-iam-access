@@ -24,9 +24,9 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - name: Check if s3 bucket exists
         id: check
-        run: aws s3api bucket-exists --bucket test
+        run: aws s3api wait bucket-exists --bucket test
       - name: Create S3 bucket if doesn't exist
-        run: aws s3 mb s3://${{ env.BUCKET_NAME }}
+        run: if aws s3api head-bucket --bucket test 2>/dev/null; then aws s3 mb s3://${{ env.BUCKET_NAME }}
         env:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
           ACL: "public"
