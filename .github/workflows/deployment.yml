@@ -22,9 +22,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.ROLE_NAME }}
           aws-region: ${{ env.AWS_REGION }}
-      - name: Check if s3 bucket exists
-        run: aws s3 ls s3://test
-      - name: Create S3 bucket if doesn't exist
+      - name: Create S3 bucket
         run: aws s3 mb s3://${{ env.BUCKET_NAME }}
         env:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
