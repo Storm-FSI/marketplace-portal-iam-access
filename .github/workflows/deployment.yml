@@ -24,6 +24,5 @@ jobs:
         run: aws s3 mb s3://${{ env.BUCKET_NAME }}
         env:
           AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
-          ACL: "public"
       - name:  Copy template JSON file to s3
         run: aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ github.event.repository.name }}/
