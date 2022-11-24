@@ -2,7 +2,7 @@ name: AWS S3 GitHub actions workflow
 on:
   push
 env:
-  BUCKET_NAME : "test-buckets"
+  BUCKET_NAME : "test-storm-buckets"
   AWS_REGION : "eu-central-1"
   ROLE_NAME: "github-oidc-aws-connector"
   TEMPLATE_FILE: "marketplace-management-FSI-template.json"
