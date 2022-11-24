@@ -2,7 +2,7 @@ name: AWS S3 GitHub actions workflow
 on:
   push
 env:
-  BUCKET_NAME : "strom-fsi-test"
+  BUCKET_NAME : "strom-fsi-test-bucket"
   AWS_REGION : "eu-central-1"
   ROLE_NAME: "github-oidc-aws-connector"
   TEMPLATE_FILE: "marketplace-management-FSI-template.json"
@@ -18,7 +18,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWSACCOUNTID }}:role/${{ env.ROLE_NAME }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ env.ROLE_NAME }}
           aws-region: ${{ env.AWS_REGION }}
       - name: Create bucket in S3
         run: aws s3api get-bucket-location --bucket ${{ env.BUCKET_NAME }} || aws s3api create-bucket --bucket ${{ env.BUCKET_NAME }} --region ${{ env.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ env.AWS_REGION }}
