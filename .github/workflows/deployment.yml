@@ -28,3 +28,5 @@ jobs:
         run: aws s3api get-bucket-acl --bucket ${{ env.BUCKET_NAME }}
       - name:  Copy template JSON file to s3
         run: aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ github.event.repository.name }}/
+      - name: get acl access
+        run: aws s3api get-object-acl --bucket ${{ env.BUCKET_NAME }} --key ${{ env.TEMPLATE_FILE }}
