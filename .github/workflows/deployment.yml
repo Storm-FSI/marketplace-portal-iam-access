@@ -27,4 +27,4 @@ jobs:
       - name: Enable acl public access
         run: aws s3api get-bucket-acl --bucket ${{ env.BUCKET_NAME }}
       - name:  Copy template JSON file to s3
-        run: aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ github.event.repository.name }}/ --storage-class STANDARD
+        run: aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ github.event.repository.name }}/ --acl bucket-owner-full-control
