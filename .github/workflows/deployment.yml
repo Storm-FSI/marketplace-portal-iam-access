@@ -25,9 +25,9 @@ jobs:
       - name: Grant public access
         run: aws s3api put-public-access-block --bucket ${{ env.BUCKET_NAME }} --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
       - name: Update policy.json
-        run: echo "`jq '.Statement[0].Resource="arn:aws:s3:::${{ env.BUCKET_NAME }}/*"' ${{ github.workspace }}/policy.json`" > ${{ github.workspace }}/policy.json
+        run: echo "`jq '.Statement[0].Resource="arn:aws:s3:::${{ env.BUCKET_NAME }}/*"' ${{ github.workspace }}/policyBucket.json`" > ${{ github.workspace }}/policyBucket.json
       - name: read policy.json
-        run: cat ${{ github.workspace }}/policy.json
+        run: cat ${{ github.workspace }}/policyBucket.json
       - name: Add policy 
         run: aws s3api put-bucket-policy  --policy file://${{ github.workspace }}/policyBucket.json --bucket ${{ env.BUCKET_NAME }}
       - name: Enable acl public access
