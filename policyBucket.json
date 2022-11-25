@@ -6,7 +6,7 @@
       "Effect":"Allow",
       "Principal": "*",
       "Action":["s3:*"],
-      "Resource":["arn:aws:s3:::test-storm-fsi-buckets/*"]
+      "Resource":["arn:aws:s3:::test-marketplace-strom-bucket/*"]
     }
   ]
 }
