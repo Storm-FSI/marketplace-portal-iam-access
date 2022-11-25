@@ -32,7 +32,5 @@ jobs:
           cat ${{ github.workspace }}/policyBucket.json
           # Add policy for bucket
           aws s3api put-bucket-policy  --policy file://${{ github.workspace }}/policyBucket.json --bucket ${{ env.BUCKET_NAME }}
-          # Enable acl public access for bucket
-          aws s3api put-bucket-acl --bucket ${{ env.BUCKET_NAME }} --grant-full-control uri=http://acs.amazonaws.com/groups/global/AllUsers
           # Copy template JSON file to s3
-          aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ github.event.repository.name }}/ --acl bucket-owner-full-control
+          aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ github.event.repository.name }}/
