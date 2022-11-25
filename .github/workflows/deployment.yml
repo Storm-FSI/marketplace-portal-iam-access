@@ -23,7 +23,7 @@ jobs:
       - name: Create bucket in S3
         run: aws s3api get-bucket-location --bucket ${{ env.BUCKET_NAME }} || aws s3api create-bucket --bucket ${{ env.BUCKET_NAME }} --region ${{ env.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ env.AWS_REGION }} --acl "public-read-write"
       - name: Grant public access
-        run: aws s3api put-public-access-block --bucket ${{ env.BUCKET_NAME }} --public-access-block-configuration "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+        run: aws s3api put-public-access-block --bucket ${{ env.BUCKET_NAME }} --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
       - name: Add policy 
         run: aws s3api put-bucket-policy  --policy file://${{ github.workspace }}/policyBucket.json --bucket ${{ env.BUCKET_NAME }}
       - name: Enable acl public access
