@@ -25,11 +25,11 @@ jobs:
       - name: Grant public access
         run: aws s3api put-public-access-block --bucket ${{ env.BUCKET_NAME }} --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
       - name: Update policyBucket.json file
-        run: echo "`jq '.Statement[0].Resource="arn:aws:s3:::${{ env.BUCKET_NAME }}/*"' policyBucket.json`" > policyBucket.json
+        run: echo "`jq '.Statement[0].Resource="arn:aws:s3:::${{ env.BUCKET_NAME }}/*"' ${{ github.workspace }}/policyBucket.json`" > ${{ github.workspace }}/policyBucket.json
       - name: Read bucket policy file
-        run: cat ./policyBucket.json
+        run: cat ${{ github.workspace }}/policyBucket.json
       - name: Add policy for bucket
-        run: aws s3api put-bucket-policy  --policy file://policyBucket.json --bucket ${{ env.BUCKET_NAME }}
+        run: aws s3api put-bucket-policy  --policy file://${{ github.workspace }}/policyBucket.json --bucket ${{ env.BUCKET_NAME }}
       - name: Enable acl public access for bucket
         run: aws s3api put-bucket-acl --bucket ${{ env.BUCKET_NAME }} --grant-full-control uri=http://acs.amazonaws.com/groups/global/AllUsers
       - name:  Copy template JSON file to s3
