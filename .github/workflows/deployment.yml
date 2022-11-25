@@ -22,17 +22,17 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - name: Workflow Steps
         run: |
-          #Create bucket in S3
+          # Create bucket in S3
           aws s3api get-bucket-location --bucket ${{ env.BUCKET_NAME }} || aws s3api create-bucket --bucket ${{ env.BUCKET_NAME }} --region ${{ env.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ env.AWS_REGION }} --acl "public-read-write"
           #Grant public access
           aws s3api put-public-access-block --bucket ${{ env.BUCKET_NAME }} --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
-          #Update policyBucket.json file
-          echo "`jq '.Statement[0].Resource="arn:aws:s3:::${{ env.BUCKET_NAME }}/*"' ${{ github.workspace }}/policyBucket.json`" > ${{ github.workspace }}/policyBucket.json
-          #Read bucket policy file
+          # Update policyBucket.json file
+          sed -i -e '/bucketName/${{ env.BUCKET_NAME }}/g' ${{ github.workspace }}/policyBucket.json
+          # Read bucket policy file
           cat ${{ github.workspace }}/policyBucket.json
-          #Add policy for bucket
+          # Add policy for bucket
           aws s3api put-bucket-policy  --policy file://${{ github.workspace }}/policyBucket.json --bucket ${{ env.BUCKET_NAME }}
-          #Enable acl public access for bucket
+          # Enable acl public access for bucket
           aws s3api put-bucket-acl --bucket ${{ env.BUCKET_NAME }} --grant-full-control uri=http://acs.amazonaws.com/groups/global/AllUsers
-          #Copy template JSON file to s3
+          # Copy template JSON file to s3
           aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ github.event.repository.name }}/ --acl bucket-owner-full-control
