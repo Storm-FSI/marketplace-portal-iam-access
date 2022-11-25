@@ -1,14 +1,12 @@
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "Statement1",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "arn:aws:iam::391091994985:root"
-            },
-            "Action": "s3:*",
-            "Resource": "arn:aws:s3:::strom-bucket"
-        }
-    ]
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Sid":"PublicRead",
+      "Effect":"Allow",
+      "Principal": "*",
+      "Action":["s3:*"],
+      "Resource":["arn:aws:s3:::/*"]
+    }
+  ]
 }
