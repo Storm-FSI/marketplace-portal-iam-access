@@ -6,7 +6,7 @@
       "Effect":"Allow",
       "Principal": "*",
       "Action":["s3:*"],
-      "Resource":["arn:aws:s3:::${{ env.BUCKET_NAME }}/*"]
+      "Resource":["arn:aws:s3:::*"]
     }
   ]
 }
