@@ -24,6 +24,8 @@ jobs:
         run: aws s3api get-bucket-location --bucket ${{ env.BUCKET_NAME }} || aws s3api create-bucket --bucket ${{ env.BUCKET_NAME }} --region ${{ env.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ env.AWS_REGION }} --acl "public-read-write"
       - name: Grant public access
         run: aws s3api put-public-access-block --bucket ${{ env.BUCKET_NAME }} --public-access-block-configuration "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+      - name: Add policy 
+        run: aws s3api put-bucket-policy --bucket ${{ env.BUCKET_NAME }} --policy ${{ github.workspace }}/policy.json
       - name: Enable acl public access
         run: aws s3api put-bucket-acl --bucket ${{ env.BUCKET_NAME }} --grant-full-control uri=http://acs.amazonaws.com/groups/global/AllUsers
       - name:  Copy template JSON file to s3
