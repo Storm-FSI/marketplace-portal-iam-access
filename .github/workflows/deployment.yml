@@ -24,13 +24,13 @@ jobs:
         run: aws s3api get-bucket-location --bucket ${{ env.BUCKET_NAME }} || aws s3api create-bucket --bucket ${{ env.BUCKET_NAME }} --region ${{ env.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ env.AWS_REGION }} --acl "public-read-write"
       - name: Grant public access
         run: aws s3api put-public-access-block --bucket ${{ env.BUCKET_NAME }} --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
-      - name: Update policy.json
+      - name: Update policyBucket.json file
         run: echo "`jq '.Statement[0].Resource="arn:aws:s3:::${{ env.BUCKET_NAME }}/*"' ${{ github.workspace }}/policyBucket.json`" > ${{ github.workspace }}/policyBucket.json
-      - name: read policy.json
+      - name: Read bucket policy file
         run: cat ${{ github.workspace }}/policyBucket.json
-      - name: Add policy 
+      - name: Add policy for bucket
         run: aws s3api put-bucket-policy  --policy file://${{ github.workspace }}/policyBucket.json --bucket ${{ env.BUCKET_NAME }}
-      - name: Enable acl public access
+      - name: Enable acl public access for bucket
         run: aws s3api put-bucket-acl --bucket ${{ env.BUCKET_NAME }} --grant-full-control uri=http://acs.amazonaws.com/groups/global/AllUsers
       - name:  Copy template JSON file to s3
         run: aws s3 cp ${{ github.workspace }}/${{ env.TEMPLATE_FILE }} s3://${{ env.BUCKET_NAME }}/${{ github.event.repository.name }}/ --acl bucket-owner-full-control
