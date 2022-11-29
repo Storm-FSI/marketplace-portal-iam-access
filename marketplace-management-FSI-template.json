@@ -1,16 +1,16 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Create a role with marketplace-portal full access permission",
+    "Description": "Create an IAM role with full access to marketplace portal",
     "Parameters" : {
       "AWSAccountId" : {
         "Type" : "String",
-        "Description" : "Enter AWS account id",
+        "Description" : "AWS Account Id of the external account, that need access to Marketplace",
         "AllowedPattern" : "^[\\d]{12}$"
       },
-      "AWSRegion" : {
+      "AWSRole" : {
         "Type" : "String",
-        "Description" : "Enter AWS region",
-        "AllowedPattern" : "^[a-z]{2}-[a-z]{4,10}-[\\d]+$"
+        "Description" : "AWS IAM role that is allowed to assume the Marketplace role",
+        "Default" : "role/aws-reserved/sso.amazonaws.com/eu-central-1/AWSReservedSSO_AWSAdministratorAccess_*"
       }
     },
     "Resources": {
@@ -36,12 +36,12 @@
                                 {"aws:PrincipalArn": 
                                     {
                                         "Fn::Sub": [
-                                            "arn:aws:iam::${accountId}:role/aws-reserved/sso.amazonaws.com/${region}/AWSReservedSSO_AWSAdministratorAccess_*", 
+                                            "arn:aws:iam::${accountId}:${role}", 
                                             {"accountId": {
                                                 "Ref": "AWSAccountId"
                                             },
-                                            "region": {
-                                                "Ref": "AWSRegion"
+                                            "role": {
+                                                "Ref": "AWSRole"
                                             }}
                                         ]
                                     } 
@@ -78,7 +78,7 @@
     },
     "Outputs": {
         "MarketPlacePortalRole": {
-            "Description": "Create a role with marketplace portal full access permission",
+            "Description": "IAM role with full access to marketplace portal",
             "Value": {
                 "Fn::GetAtt": [
                     "MarketPlaceRole",
