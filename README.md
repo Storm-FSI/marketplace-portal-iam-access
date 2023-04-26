@@ -9,5 +9,5 @@ After deployment you can access the Account A by switch role from the Account B.
 
 # Deployment
 
-Click to deploy [Quick Create Stack](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/quickcreate?templateUrl=https%3A%2F%2Fstormfsi-solutions.s3.amazonaws.com%2F/marketplace-portal-iam-access/marketplace-management-FSI-template.json&stackName=MarketPlacePortalRole&param_AWSRegion=eu-central-1) in your Marketplace Account
+Click to deploy [Quick Create Stack](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/quickcreate?templateUrl=https%3A%2F%2Fstorm-fsi-solutions.s3.amazonaws.com/marketplace-portal-iam-access/marketplace-management-FSI-template.json&stackName=MarketPlacePortalRole&param_AWSRegion=eu-central-1) in your Marketplace Account
 
