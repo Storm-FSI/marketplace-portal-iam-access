@@ -64,7 +64,8 @@
                                 {
                                     "Effect": "Allow",
                                     "Action": [
-                                        "aws-marketplace:*"
+                                        "aws-marketplace:*",
+                                        "support:CreateCase"
                                     ],
                                     "Resource": "*"
                                 }
